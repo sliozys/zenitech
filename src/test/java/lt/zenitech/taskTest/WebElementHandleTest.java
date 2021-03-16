@@ -1,41 +1,31 @@
 package lt.zenitech.taskTest;
 
-import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 
-import java.io.File;
 
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Selenide.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class WebElementHandleTest {
-
-    @BeforeEach
-    void startTest() {
-//        Configuration.holdBrowserOpen = true;
-        Configuration.screenshots = false;
-        Configuration.headless = true;
-        Configuration.savePageSource = false;
-
-        File file = new File("src/main/resources/QA_Home_Assignment.html");
-        String fullPath = file.getAbsolutePath();
-
-        open(fullPath);
-    }
+public class WebElementHandleTest extends BaseTest{
 
     @Test
     void iconChangesColour(){
-        String zenButton = ".mainGrid > div:nth-child(1) > div:nth-child(1)";
-        $(zenButton).shouldHave(attribute("active", "true"));
+        String locator = ".mainGrid .row:first-of-type .icon:first-of-type";
+        $(locator).click();
+        $(locator).shouldHave(attribute("active", "true"));
     }
 
     @Test
     void externalLinkOpens(){
        $(By.linkText("ISTQB Foundation Level Syllabus")).click();
-       switchTo().window(1);
-    }
+//       switchTo().window(1);
+       boolean actual = task.isNewWindowOpened();
+        assertTrue(actual);
 
+    }
 
 }
